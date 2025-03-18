@@ -282,7 +282,9 @@ def run_exp(args):
                     --learning_rate {learning_rate}  --warmup_steps {warmup_steps}  \
                     --io_format {format}  --explanation_sep {explanation_sep}  \
                     --max_steps {max_steps}  --lr_scheduler_type constant  --eval_steps {eval_steps}'''
-
+            print("---------------------------------------")
+            print(cmd)
+            print("---------------------------------------")
             if args.deepspeed:
                 cmd += " --deepspeed deepspeed_config.json"
 
