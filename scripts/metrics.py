@@ -57,15 +57,18 @@ def evaluate(
                     # )
                     out = model.generate(
                         input_ids=inpt_tensor,
-                        max_length=300,
+                        max_length=2,
                         pad_token_id=tokenizer.pad_token_id,
                         eos_token_id=tokenizer.eos_token_id,
                         decoder_start_token_id=tokenizer.pad_token_id
                     )
+
                 skip_special_tokens = False if "infilling" in io_format else True
                 # print(f'OUTPUT without removed input tensor {tokenizer.decode(out[0].tolist())}')
                 # print(f'OUTPUT after removing input tensor {tokenizer.decode(out[0].tolist()[inpt_tensor_length:])}')
                 words = tokenizer.decode(out[0].tolist()[inpt_tensor_length:], skip_special_tokens=skip_special_tokens) #started decoding after the input sequence
+                # words = tokenizer.decode(out[0].tolist(), skip_special_tokens=True,skip_special_tokens=skip_special_tokens).strip()
+
                 if "infilling" in io_format:
                     words = words.replace("<extra_id_1>", f" {explanation_sep}")
                     words = words.replace(tokenizer.pad_token,'')
