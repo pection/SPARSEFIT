@@ -255,6 +255,7 @@ def run_exp(args):
         print("-----------------------")
         print(format_vals)
         print(n_shot_vals)
+        print(hparams)
         for format_n_shots_params in itertools.product(format_vals, n_shot_vals):
             print("WELCOME")
             format, n_shots = format_n_shots_params
