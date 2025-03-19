@@ -250,6 +250,9 @@ def run_exp(args):
 
         format_vals = format_dict[dataset]
         n_shot_vals = n_shots_dict[dataset]
+        print("-----------------------")
+        print(f"dataset = {dataset}")
+        print("-----------------------")
         for format_n_shots_params in itertools.product(format_vals, n_shot_vals):
             format, n_shots = format_n_shots_params
             if 't5' in model: #only perform unified format check for t5 models
