@@ -268,6 +268,7 @@ def run_exp(args):
                 os.mkdir(os.path.join(args.exp_root, run_name))
 
             output_dir = os.path.join(args.exp_root, run_name)
+            print("WELCOME2")
 
             # You might need to adjust the cmd_prefix for the type of server you're using, e.g., if you use Slurm
             # We run the commands on google cloud with N gpus allocated just for this project 
