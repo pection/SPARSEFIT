@@ -46,6 +46,7 @@ def evaluate(
                 if len(generations_list)==0:
                     # out = model(input_ids=inpt_tensor, attention_mask=None)
                     out = model(input_ids=inpt_tensor, attention_mask=None, decoder_input_ids=decoder_input_ids)
+                print(f"Raw Model Output: {out}")
 
                 # with torch.no_grad(): 
                 with FSDP.summon_full_params(model, writeback=False, recurse=False):  
@@ -62,6 +63,7 @@ def evaluate(
                         eos_token_id=tokenizer.eos_token_id,
                         decoder_start_token_id=tokenizer.pad_token_id
                     )
+                print(f"Raw Model Output2: {out}")
 
                 skip_special_tokens = False if "infilling" in io_format else True
                 # print(f'OUTPUT without removed input tensor {tokenizer.decode(out[0].tolist())}')
