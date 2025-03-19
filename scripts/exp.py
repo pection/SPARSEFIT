@@ -263,12 +263,14 @@ def run_exp(args):
                     continue
             run_name = '-'.join([str(v) for v in hparams if not isinstance(v, dict)]).replace('/', '-').replace('.', '').replace(' ','')
             run_name += '-'.join([format, str(n_shots)])
+            print("WELCOME2")
 
             if not os.path.isdir(os.path.join(args.exp_root, run_name)):
                 os.mkdir(os.path.join(args.exp_root, run_name))
+            print("WELCOME3")
 
             output_dir = os.path.join(args.exp_root, run_name)
-            print("WELCOME2")
+            print("WELCOME4")
 
             # You might need to adjust the cmd_prefix for the type of server you're using, e.g., if you use Slurm
             # We run the commands on google cloud with N gpus allocated just for this project 
