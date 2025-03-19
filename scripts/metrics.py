@@ -39,15 +39,28 @@ def evaluate(
                 # print(f'INPUT {tokenizer.decode(element["input_ids"])}')
                 # print(f'Input length {len(element["input_ids"])}')
                 inpt_tensor_length = len(element["input_ids"])
+                decoder_input_ids = torch.full(
+                    (1, 1), tokenizer.pad_token_id, dtype=torch.long, device=device
+                )
+
                 if len(generations_list)==0:
-                    out = model(input_ids=inpt_tensor, attention_mask=None)
+                    # out = model(input_ids=inpt_tensor, attention_mask=None)
+                    out = model(input_ids=inpt_tensor, attention_mask=None, decoder_input_ids=decoder_input_ids)
+
                 # with torch.no_grad(): 
                 with FSDP.summon_full_params(model, writeback=False, recurse=False):  
+                    # out = model.generate(
+                    #     input_ids=inpt_tensor,
+                    #     max_length=300,
+                    #     pad_token_id=tokenizer.pad_token_id,
+                    #     eos_token_id=tokenizer.eos_token_id,
+                    # )
                     out = model.generate(
                         input_ids=inpt_tensor,
                         max_length=300,
                         pad_token_id=tokenizer.pad_token_id,
                         eos_token_id=tokenizer.eos_token_id,
+                        decoder_start_token_id=tokenizer.pad_token_id
                     )
                 skip_special_tokens = False if "infilling" in io_format else True
                 # print(f'OUTPUT without removed input tensor {tokenizer.decode(out[0].tolist())}')
