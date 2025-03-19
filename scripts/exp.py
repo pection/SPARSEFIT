@@ -269,6 +269,7 @@ def run_exp(args):
             print("WELCOME2")
             print(hparams)
             if 't5' in model: #only perform unified format check for t5 models
+                print(f"t5 in model")
                 if ('unified' in model and 'unified' not in format) or ('unified' not in model and 'unified' in format):
                     continue
 
