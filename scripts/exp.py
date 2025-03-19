@@ -256,6 +256,7 @@ def run_exp(args):
         print(format_vals)
         print(n_shot_vals)
         for format_n_shots_params in itertools.product(format_vals, n_shot_vals):
+            print("WELCOME")
             format, n_shots = format_n_shots_params
             if 't5' in model: #only perform unified format check for t5 models
                 if ('unified' in model and 'unified' not in format) or ('unified' not in model and 'unified' in format):
