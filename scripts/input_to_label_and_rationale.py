@@ -670,6 +670,9 @@ def main():
     if trainer.is_fsdp_enabled:
         trainer.accelerator.state.fsdp_plugin.set_state_dict_type("FULL_STATE_DICT")
         unwrap_model = accelerator.unwrap_model(model)
+    else:
+        unwrap_model = accelerator.unwrap_model(model)
+
     results = {}
     if training_args.do_eval:
         start_time = time.time()
