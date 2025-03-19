@@ -488,6 +488,10 @@ def main():
             if not training_args.do_train:
                 continue
             data_path = os.path.join(os.getcwd(), data_args.data_path.lstrip('../'), f"SenMaking.{split}.csv")
+            print("----------")
+            print(f"Full data path = {data_path}")
+            print("----------")
+
             df = pd.read_csv(data_path)
 
             if data_args.n_shots > 0: # This condition could probably be removed; we used n_shots=0 to experiment with training with the entire train set
