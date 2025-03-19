@@ -259,10 +259,7 @@ def run_exp(args):
         run_name_parts = []
 
         # Iterate through hparams, excluding dictionary elements
-        for v in hparams:
-            if not isinstance(v, dict):
-                run_name_parts.append(str(v))  # Convert to string and store it
-        print(run_name_parts)
+
         for format_n_shots_params in itertools.product(format_vals, n_shot_vals):
             print("WELCOME")
             format, n_shots = format_n_shots_params
@@ -270,9 +267,12 @@ def run_exp(args):
             print(hparams)
             if 't5' in model: #only perform unified format check for t5 models
                 print(f"t5 in model")
-                if ('unified' in model and 'unified' not in format) or ('unified' not in model and 'unified' in format):
-                    continue
-
+                # if ('unified' in model and 'unified' not in format) or ('unified' not in model and 'unified' in format):
+                #     continue
+            for v in hparams:
+                if not isinstance(v, dict):
+                    run_name_parts.append(str(v))  # Convert to string and store it
+            print(run_name_parts)
             run_name = '-'.join([str(v) for v in hparams if not isinstance(v, dict)]).replace('/', '-').replace('.', '').replace(' ','')
 
             print("WELCOME3")
