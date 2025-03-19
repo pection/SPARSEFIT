@@ -155,7 +155,9 @@ def evaluate(
                     gold_l = gold["offensiveYN"].replace("not offensive", "not_offensive")
                 gold_explanations_string = gold["targetStereotype"]
                 post = gold['post'].replace('\n', ' ')
-                g.write(f"{post}\n")
+                g.write(f"{str(post)}\n")
+
+                # g.write(f"{post}\n")
                 if pd.isna(gold_explanations_string) or pd.isna(gold_l):
                     raise ValueError('Gold label or explanation empty...')
                 else:
