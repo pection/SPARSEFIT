@@ -310,7 +310,9 @@ def main():
     set_seed(training_args.seed)
     set_other_seeds(training_args.seed)
 
-    
+    if "t5" in model_args.model_class:
+        model_class = "t5"
+
     tokenizer_name = TOKENIZER_MAPPING[model_class]
     logger.info("Loading pretrained tokenizer...")
 
