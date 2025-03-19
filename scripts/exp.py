@@ -299,7 +299,7 @@ def run_exp(args):
                 cmd_batch_size = f" --per_device_train_batch_size 1 --per_device_eval_batch_size 1 --gradient_accumulation_steps 8 "
 
             cmd = f'''{cmd_prefix} \
-                    --output_dir {output_dir}  --model_type {model}   \
+                    --output_dir {output_dir}  --model_type {model} --model_class {model}   \
                     --tokenizer_name {tokenizer_name}   --task_name {dataset}  --version v1.0 --do_train --dev_predict   \
                     --logging_first_step  --logging_steps 1  --save_total_limit 1  --seed {seed}     --num_train_epochs {epochs}    \
                     {cmd_batch_size} \
