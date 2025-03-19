@@ -259,7 +259,7 @@ def run_exp(args):
             print("WELCOME")
             format, n_shots = format_n_shots_params
             print("WELCOME2")
-
+            print(hparams)
             if 't5' in model: #only perform unified format check for t5 models
                 if ('unified' in model and 'unified' not in format) or ('unified' not in model and 'unified' in format):
                     continue
