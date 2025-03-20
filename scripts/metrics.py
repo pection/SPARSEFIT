@@ -72,7 +72,7 @@ def evaluate(
                 # print(f'OUTPUT without removed input tensor {tokenizer.decode(out[0].tolist())}')
                 # print(f'OUTPUT after removing input tensor {tokenizer.decode(out[0].tolist()[inpt_tensor_length:])}')
                 words = tokenizer.decode(out[0].tolist()[inpt_tensor_length:], skip_special_tokens=skip_special_tokens) #started decoding after the input sequence
-                mike_words = tokenizer_test.decode(out,skip_special_tokens=True)
+                mike_words = tokenizer_test.decode(out[0].tolist(), skip_special_tokens=True)
                 # words = tokenizer.decode(out[0].tolist(), skip_special_tokens=True,skip_special_tokens=skip_special_tokens).strip()
                 print("---------------")
                 print(f"words = {words}")
