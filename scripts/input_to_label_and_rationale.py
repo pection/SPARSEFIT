@@ -347,7 +347,7 @@ def main():
                     from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
                     # tokenizer = AutoTokenizer.from_pretrained("google-t5/t5-base")
-                    model = AutoModelForSeq2SeqLM.from_pretrained("google-t5/t5-large")
+                    model = AutoModelForSeq2SeqLM.from_pretrained("google-t5/t5-base")
                 else:
                     model = model_name.from_pretrained(model_args.pretrained_model_file)
                 
