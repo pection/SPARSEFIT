@@ -49,7 +49,7 @@ def evaluate(
                 if len(generations_list)==0:
                     # out = model(input_ids=inpt_tensor, attention_mask=None)
                     out = model(input_ids=inpt_tensor, attention_mask=None, decoder_input_ids=decoder_input_ids)
-                print(f"Raw Model Output: {out}")
+                # print(f"Raw Model Output: {out}")
 
                 # with torch.no_grad(): 
                 with FSDP.summon_full_params(model, writeback=False, recurse=False):  
@@ -66,13 +66,13 @@ def evaluate(
                         eos_token_id=tokenizer.eos_token_id,
                         decoder_start_token_id=tokenizer.pad_token_id
                     )
-                print(f"Raw Model Output2: {out}")
+                # print(f"Raw Model Output2: {out}")
 
                 skip_special_tokens = False if "infilling" in io_format else True
                 # print(f'OUTPUT without removed input tensor {tokenizer.decode(out[0].tolist())}')
                 # print(f'OUTPUT after removing input tensor {tokenizer.decode(out[0].tolist()[inpt_tensor_length:])}')
                 # words = tokenizer.decode(out[0].tolist()[inpt_tensor_length:], skip_special_tokens=skip_special_tokens) #started decoding after the input sequence
-                words = tokenizer_test.decode(out[0].tolist(), skip_special_tokens=True)
+                words = tokenizer_test.decode(out[0].tolist(), skip_special_tokens=skip_special_tokens)
                 # words = tokenizer.decode(out[0].tolist(), skip_special_tokens=True,skip_special_tokens=skip_special_tokens).strip()
                 print("---------------")
                 print(f"words = {words}")
