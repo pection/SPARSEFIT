@@ -267,8 +267,8 @@ def run_exp(args):
             print(hparams)
             if 't5' in model: #only perform unified format check for t5 models
                 print(f"t5 in model")
-                # if ('unified' in model and 'unified' not in format) or ('unified' not in model and 'unified' in format):
-                #     continue
+                if ('unified' in model and 'unified' not in format) or ('unified' not in model and 'unified' in format):
+                    continue
             for v in hparams:
                 if not isinstance(v, dict):
                     run_name_parts.append(str(v))  # Convert to string and store it
