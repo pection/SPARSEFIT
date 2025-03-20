@@ -76,6 +76,8 @@ def evaluate(
                 # words = tokenizer.decode(out[0].tolist(), skip_special_tokens=True,skip_special_tokens=skip_special_tokens).strip()
                 print("---------------")
                 print(f"words = {words}")
+                print(f"mike_words = {mike_words}")
+
                 print("---------------")
 
                 if "infilling" in io_format:
