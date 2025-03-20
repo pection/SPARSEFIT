@@ -71,12 +71,12 @@ def evaluate(
                 skip_special_tokens = False if "infilling" in io_format else True
                 # print(f'OUTPUT without removed input tensor {tokenizer.decode(out[0].tolist())}')
                 # print(f'OUTPUT after removing input tensor {tokenizer.decode(out[0].tolist()[inpt_tensor_length:])}')
-                words = tokenizer.decode(out[0].tolist()[inpt_tensor_length:], skip_special_tokens=skip_special_tokens) #started decoding after the input sequence
-                mike_words = tokenizer_test.decode(out[0].tolist(), skip_special_tokens=True)
+                # words = tokenizer.decode(out[0].tolist()[inpt_tensor_length:], skip_special_tokens=skip_special_tokens) #started decoding after the input sequence
+                words = tokenizer_test.decode(out[0].tolist(), skip_special_tokens=True)
                 # words = tokenizer.decode(out[0].tolist(), skip_special_tokens=True,skip_special_tokens=skip_special_tokens).strip()
                 print("---------------")
                 print(f"words = {words}")
-                print(f"mike_words = {mike_words}")
+                # print(f"mike_words = {mike_words}")
 
                 print("---------------")
 
@@ -88,8 +88,8 @@ def evaluate(
                     words = ' '.join(words.split())
                 words = (words.replace("\n", " ").replace(tokenizer.eos_token, " ").strip())
                 w.write(words + "\n")
-                w.write(out + "\n")
-                w.write(mike_words + "\n")
+                # w.write(out + "\n")
+                # w.write(mike_words + "\n")
 
 
                 generations_list.append(words)
