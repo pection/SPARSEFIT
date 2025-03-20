@@ -7,6 +7,7 @@ import datasets
 import json
 from feature_conversion_methods import unified_qa_esnli_label_mapping, wt5_esnli_label_mapping, unified_qa_sbic_label_mapping
 from torch.distributed.fsdp import FullyShardedDataParallel as FSDP
+from transformers import T5Tokenizer
 
 def evaluate(
     save_path,
@@ -23,6 +24,8 @@ def evaluate(
     generations_file=None,
     io_format=None
 ):
+    tokenizer_test = T5Tokenizer.from_pretrained("t5-base")
+
     fname = os.path.join(save_path, "%s_generations.txt" % split)
     if os.path.isfile(fname):
         fname = fname.split(".txt")[0] + "_1.txt"
@@ -69,6 +72,7 @@ def evaluate(
                 # print(f'OUTPUT without removed input tensor {tokenizer.decode(out[0].tolist())}')
                 # print(f'OUTPUT after removing input tensor {tokenizer.decode(out[0].tolist()[inpt_tensor_length:])}')
                 words = tokenizer.decode(out[0].tolist()[inpt_tensor_length:], skip_special_tokens=skip_special_tokens) #started decoding after the input sequence
+                mike_words = tokenizer_test.decode(out,skip_special_tokens=True)
                 # words = tokenizer.decode(out[0].tolist(), skip_special_tokens=True,skip_special_tokens=skip_special_tokens).strip()
                 print("---------------")
                 print(f"words = {words}")
@@ -82,6 +86,10 @@ def evaluate(
                     words = ' '.join(words.split())
                 words = (words.replace("\n", " ").replace(tokenizer.eos_token, " ").strip())
                 w.write(words + "\n")
+                w.write(out + "\n")
+                w.write(mike_words + "\n")
+
+
                 generations_list.append(words)
 
     broken_count = 0
