@@ -4,8 +4,9 @@
 #SBATCH --ntasks=1                  # Run a single task
 #SBATCH --time=72:00:00             # Time limit hh:mm:ss
 #SBATCH --partition=batch            # Partition name
-#SBATCH --gres=gpu:1              # Request 2 GPUs
-#SBATCH --cpus-per-task=10
+#SBATCH --gres=gpu:1              
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=16G
 
 cd /home/slurmtest01/SILAFIT
 source ~/SILAFIT/bin/activate
