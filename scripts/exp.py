@@ -295,7 +295,10 @@ def run_exp(args):
                 cmd_batch_size = f" --per_device_train_batch_size 1 --per_device_eval_batch_size 1 --gradient_accumulation_steps {per_device_train_batch_size} "
             else:
                 # cmd_prefix = "PYTHONPATH=. python input_to_label_and_rationale.py "
-                cmd_prefix = "CUDA_VISIBLE_DEVICES=0,1,2,3 accelerate launch --debug scripts/input_to_label_and_rationale.py "
+                # cmd_prefix = "CUDA_VISIBLE_DEVICES=0,1,2,3 accelerate launch --debug scripts/input_to_label_and_rationale.py "
+                # cmd_batch_size = f" --per_device_train_batch_size 1 --per_device_eval_batch_size 1 --gradient_accumulation_steps 8 "
+
+                cmd_prefix = "CUDA_VISIBLE_DEVICES=0 accelerate launch --debug scripts/input_to_label_and_rationale.py "
                 cmd_batch_size = f" --per_device_train_batch_size 1 --per_device_eval_batch_size 1 --gradient_accumulation_steps 8 "
 
             # cmd = f'''{cmd_prefix} \
@@ -310,7 +313,7 @@ def run_exp(args):
             #         --max_steps {max_steps}  --lr_scheduler_type constant  --eval_steps {eval_steps}'''
             cmd = f'''{cmd_prefix} \
                     --output_dir {output_dir}  --model_type {model} --model_class {model}   \
-                    --tokenizer_name {tokenizer_name}   --task_name {dataset}  --version default --do_train --dev_predict   \
+                    --tokenizer_name {tokenizer_name}   --task_name {dataset}  --version v1.11 --do_train --dev_predict   \
                     --logging_first_step  --logging_steps 1  --save_total_limit 1  --seed {seed}     --num_train_epochs {epochs}    \
                     {cmd_batch_size} \
                     --early_stopping_patience {early_stopping_patience}   \
