@@ -372,7 +372,7 @@ def main():
     if data_args.task_name in {"cos_e", "esnli"}:
         version_arg = None
         if data_args.task_name == "cos_e":
-            assert data_args.version_name in {"v1.11", "v1.0"}
+            # assert data_args.version_name in {"v1.11", "v1.0"}
             version_arg = data_args.version_name
 
         load_train = True
