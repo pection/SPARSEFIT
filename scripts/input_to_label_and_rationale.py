@@ -79,6 +79,7 @@ transformers.logging.set_verbosity_info()
 import re
 from accelerate import FullyShardedDataParallelPlugin
 from torch.distributed.fsdp.fully_sharded_data_parallel import FullOptimStateDictConfig, FullStateDictConfig
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
 
 
@@ -344,7 +345,6 @@ def main():
                 if model_class == "llama":
                     model = LlamaForCausalLM.from_pretrained("meta-llama/Llama-2-7b-hf", token=os.environ['HF_TOKEN'], torch_dtype=torch.bfloat16)
                 if model_class == "t5":
-                    from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
                     # tokenizer = AutoTokenizer.from_pretrained("google-t5/t5-base")
                     model = AutoModelForSeq2SeqLM.from_pretrained("google-t5/t5-base")
@@ -579,19 +579,19 @@ def main():
         
         
         # # SPARSEFIT CHANGES
-        # # Make trainable only key terms in self-attention layers.
-        # for param in model.parameters():
-        #     param.requires_grad = False
-        # # Deactivate language model head
-        # model.lm_head.weight.requires_grad = False
+        # Make trainable only key terms in self-attention layers.
+        for param in model.parameters():
+            param.requires_grad = False
+        # Deactivate language model head
+        model.lm_head.weight.requires_grad = False
 
-        # for name, param in model.named_parameters():
-        #     if 'self_attn.q_proj' in name:
-        #         param.requires_grad = True
+        for name, param in model.named_parameters():
+            if 'self_attn.q_proj' in name:
+                param.requires_grad = True
 
-        # for name, param in model.named_parameters():
-        #     if 'layernorm' in name:
-        #         param.requires_grad = True
+        for name, param in model.named_parameters():
+            if 'layernorm' in name:
+                param.requires_grad = True
         
 
         # ###PEFT MODIFICATIONS###
