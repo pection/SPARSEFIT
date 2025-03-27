@@ -68,7 +68,7 @@ for name, param in model.named_parameters():
 # Double check what's still trainable
 print(f"model_parameter")
 for name , param in model.named_parameters():
-    print(name,param)
+    print(name)
 trainable = [name for name, param in model.named_parameters() if param.requires_grad]
 print("Trainable parameters:")
 for name in trainable:
