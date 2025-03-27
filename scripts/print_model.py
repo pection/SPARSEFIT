@@ -60,10 +60,10 @@ model = AutoModelForSeq2SeqLM.from_pretrained("google-t5/t5-base")
 print(model)
 # Freeze encoder and shared embedding
 for name, param in model.named_parameters():
-    if name.startswith("encoder") or name.startswith("shared"):
-        param.requires_grad = False
-    else:
+    if name.startswith("decoder"):
         param.requires_grad = True
+    else:
+        param.requires_grad = False
 
 # Double check what's still trainable
 print(f"model_parameter")
