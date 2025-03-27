@@ -585,13 +585,21 @@ def main():
         # Deactivate language model head
         model.lm_head.weight.requires_grad = False
 
-        for name, param in model.named_parameters():
-            if 'self_attn.q_proj' in name:
-                param.requires_grad = True
 
         for name, param in model.named_parameters():
-            if 'layernorm' in name:
+            if name.startswith("decoder"):
                 param.requires_grad = True
+            else:
+                param.requires_grad = False
+        # for name, param in model.named_parameters():
+        #     if 'self_attn.q_proj' in name:
+        #         param.requires_grad = True
+
+        # for name, param in model.named_parameters():
+        #     if 'layernorm' in name:
+        #         param.requires_grad = True
+
+
         
 
         # ###PEFT MODIFICATIONS###
