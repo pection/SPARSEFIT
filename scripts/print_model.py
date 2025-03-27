@@ -62,6 +62,8 @@ print(model)
 for name, param in model.named_parameters():
     if name.startswith("encoder") or name.startswith("shared"):
         param.requires_grad = False
+    else:
+        param.requires_grad = False
 
 # Double check what's still trainable
 trainable = [name for name, param in model.named_parameters() if param.requires_grad]
