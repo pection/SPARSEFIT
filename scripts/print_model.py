@@ -58,3 +58,4 @@ from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 model = AutoModelForSeq2SeqLM.from_pretrained("google-t5/t5-base")
 
 print(model)
+model.print_trainable_parameters()
