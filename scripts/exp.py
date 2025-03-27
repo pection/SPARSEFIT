@@ -19,9 +19,9 @@ def collect_results(args):
     
     results = []
     for exp_dir in all_experiment_dirs:
-        if 't5-3b' in exp_dir and 't5-base' in exp_dir:
-            print('Skipping this directory', str(exp_dir), ' because it has t5-3b or t5-base in it')
-            continue
+        # if 't5-3b' in exp_dir and 't5-base' in exp_dir:
+        #     print('Skipping this directory', str(exp_dir), ' because it has t5-3b or t5-base in it')
+        #     continue
         if not os.path.isdir(exp_dir):
             continue
 
