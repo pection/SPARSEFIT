@@ -587,7 +587,7 @@ def main():
 
 
         for name, param in model.named_parameters():
-            if name.startswith("decoder"):
+            if name.startswith("encoder"):
                 param.requires_grad = True
             else:
                 param.requires_grad = False
