@@ -583,13 +583,13 @@ def main():
         for param in model.parameters():
             param.requires_grad = False
         # Deactivate language model head
-        # model.lm_head.weight.requires_grad = False
         for name, param in model.named_parameters():
             # if name.startswith("decoder"):
-            if "SelfAttention.q" in name or "SelfAttention.k" in name or "SelfAttention.v"in name:
+            if "SelfAttention.q"in name:
                 param.requires_grad = True
             else:
                 param.requires_grad = False
+        model.lm_head.weight.requires_grad = True
 
         # for name, param in model.named_parameters():
         #     if name.startswith("encoder"):
