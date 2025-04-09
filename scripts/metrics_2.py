@@ -70,7 +70,8 @@ def evaluate(
                     )
 
                 # print(f"Raw Model Output2: {out}")
-
+                print(tokenizer.eos_token_id)
+                print(tokenizer.eos_token_id)
                 skip_special_tokens = False if "infilling" in io_format else True
                 # print(f'OUTPUT without removed input tensor {tokenizer.decode(out[0].tolist())}')
                 # print(f'OUTPUT after removing input tensor {tokenizer.decode(out[0].tolist()[inpt_tensor_length:])}')
