@@ -583,15 +583,14 @@ def main():
         # # SPARSEFIT CHANGES
         # Make trainable only key terms in self-attention layers.
         for param in model.parameters():
-            param.requires_grad = False
+            param.requires_grad = True
         # Deactivate language model head
         # for name, param in model.named_parameters():
         #     # if name.startswith("decoder"):
-        #     if "SelfAttention.q"in name:
+        #     if 'Dense.wo' in name:
         #         param.requires_grad = True
         #     else:
         #         param.requires_grad = False
-        model.lm_head.weight.requires_grad = True
 
         # for name, param in model.named_parameters():
         #     if name.startswith("encoder"):
@@ -606,6 +605,7 @@ def main():
         #     if 'layernorm' in name:
         #         param.requires_grad = True
 
+        # model.lm_head.weight.requires_grad = True
 
         
 
