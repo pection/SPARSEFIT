@@ -587,7 +587,9 @@ def main():
         # Deactivate language model head
         for name, param in model.named_parameters():
             # if name.startswith("decoder"):
-            if 'Dense.wo' in name:
+            # if 'self_attn.q_proj' in name:
+
+            if 'Dense.wo' in name or 'Dense.wi' in name :
                 param.requires_grad = True
             else:
                 param.requires_grad = False
