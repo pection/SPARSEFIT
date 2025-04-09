@@ -346,7 +346,7 @@ def main():
                     model = LlamaForCausalLM.from_pretrained("meta-llama/Llama-2-7b-hf", token=os.environ['HF_TOKEN'], torch_dtype=torch.bfloat16)
                 if model_class == "t5":
 
-                    # tokenizer = AutoTokenizer.from_pretrained("google-t5/t5-base")
+                    tokenizer = AutoTokenizer.from_pretrained("google-t5/t5-base")
                     model = AutoModelForSeq2SeqLM.from_pretrained("google-t5/t5-base")
                 else:
                     model = model_name.from_pretrained(model_args.pretrained_model_file)
