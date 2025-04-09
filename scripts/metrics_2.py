@@ -38,8 +38,7 @@ def evaluate(
         with open(fname, "w") as w:
             for i, element in tqdm(enumerate(dataset), total=len(dataset)):
                 inpt_tensor = torch.tensor(element["input_ids"], device=device).reshape(1, -1)
-                print(f'INPUT {tokenizer.decode(element["input_ids"])}')
-                print(f'Input length {len(element["input_ids"])}')
+
                 inpt_tensor_length = len(element["input_ids"])
                 decoder_input_ids = torch.full(
                     (1, 1), tokenizer.pad_token_id, dtype=torch.long, device=device
@@ -60,7 +59,7 @@ def evaluate(
                     # )
                     out = model.generate(
                         input_ids=inpt_tensor,
-                        max_length=300,
+                        max_length=20,
                         pad_token_id=tokenizer.pad_token_id,
                         eos_token_id=tokenizer.eos_token_id,
                         repetition_penalty=1.2,
@@ -79,6 +78,7 @@ def evaluate(
                 words = tokenizer.decode(out[0].tolist()[inpt_tensor_length:], skip_special_tokens=skip_special_tokens)
                 # words = tokenizer.decode(out[0].tolist(), skip_special_tokens=True,skip_special_tokens=skip_special_tokens).strip()
                 print("---------------")
+
                 print(f"inputs = {tokenizer.decode(element["input_ids"])}")
 
                 print(f"words = {words}")
