@@ -64,8 +64,13 @@ def evaluate(
                         max_length=300,
                         pad_token_id=tokenizer.pad_token_id,
                         eos_token_id=tokenizer.eos_token_id,
-                        # decoder_start_token_id=tokenizer.pad_token_id
+                        repetition_penalty=1.2,
+                        temperature=0.7,
+                        top_p=0.9,
+                        do_sample=True,
+                        decoder_start_token_id=tokenizer.pad_token_id
                     )
+
                 # print(f"Raw Model Output2: {out}")
 
                 skip_special_tokens = False if "infilling" in io_format else True
