@@ -51,23 +51,23 @@ def evaluate(
 
                 # with torch.no_grad(): 
                 with FSDP.summon_full_params(model, writeback=False, recurse=False):  
+                    out = model.generate(
+                        input_ids=inpt_tensor,
+                        max_length=300,
+                        pad_token_id=tokenizer.pad_token_id,
+                        eos_token_id=tokenizer.eos_token_id,
+                    )
                     # out = model.generate(
                     #     input_ids=inpt_tensor,
                     #     max_length=300,
                     #     pad_token_id=tokenizer.pad_token_id,
                     #     eos_token_id=tokenizer.eos_token_id,
+                    #     repetition_penalty=1.2,
+                    #     temperature=0.7,
+                    #     top_p=0.9,
+                    #     do_sample=True,
+                    #     decoder_start_token_id=tokenizer.pad_token_id
                     # )
-                    out = model.generate(
-                        input_ids=inpt_tensor,
-                        max_length=50,
-                        pad_token_id=tokenizer.pad_token_id,
-                        eos_token_id=tokenizer.eos_token_id,
-                        repetition_penalty=1.2,
-                        temperature=0.7,
-                        top_p=0.9,
-                        do_sample=True,
-                        decoder_start_token_id=tokenizer.pad_token_id
-                    )
 
                 # print(f"Raw Model Output2: {out}")
                 print(tokenizer.eos_token_id)
@@ -77,6 +77,7 @@ def evaluate(
                 # print(f'OUTPUT after removing input tensor {tokenizer.decode(out[0].tolist()[inpt_tensor_length:])}')
                 # words = tokenizer.decode(out[0].tolist()[inpt_tensor_length:], skip_special_tokens=skip_special_tokens) #started decoding after the input sequence
                 words = tokenizer.decode(out[0].tolist()[inpt_tensor_length:], skip_special_tokens=skip_special_tokens)
+
                 # words = tokenizer.decode(out[0].tolist(), skip_special_tokens=True,skip_special_tokens=skip_special_tokens).strip()
                 print("---------------")
 
