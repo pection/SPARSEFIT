@@ -59,7 +59,7 @@ from custom_args import (
     DataTrainingArguments,
     ModelArguments
 )
-from metrics import evaluate
+from metrics_2 import evaluate
 import torch
 import datasets
 import git
