@@ -229,9 +229,7 @@ def run_exp(args):
                       'ecqa': '../data/ECQA-Dataset',
                       'sensemaking': '../data/SenseMaking/',
                       'sbic': '../data/SBIC/'}
-    testdir = os.path.join(os.getcwd(),'../data/SBIC')
-    print(f"now = {os.path.join(os.getcwd(),'../data/SBIC')}")
-    print(os.listdir(testdir))
+
     commands = []
     for hparams in itertools.product(dataset_vals,
                                     seed_vals,
