@@ -59,7 +59,7 @@ def evaluate(
                     # )
                     out = model.generate(
                         input_ids=inpt_tensor,
-                        max_length=20,
+                        max_length=50,
                         pad_token_id=tokenizer.pad_token_id,
                         eos_token_id=tokenizer.eos_token_id,
                         repetition_penalty=1.2,
