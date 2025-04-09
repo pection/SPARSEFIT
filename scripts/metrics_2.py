@@ -24,7 +24,6 @@ def evaluate(
     generations_file=None,
     io_format=None
 ):
-    tokenizer_test = tokenizer
 
     fname = os.path.join(save_path, "%s_generations.txt" % split)
     if os.path.isfile(fname):
@@ -39,8 +38,8 @@ def evaluate(
         with open(fname, "w") as w:
             for i, element in tqdm(enumerate(dataset), total=len(dataset)):
                 inpt_tensor = torch.tensor(element["input_ids"], device=device).reshape(1, -1)
-                # print(f'INPUT {tokenizer.decode(element["input_ids"])}')
-                # print(f'Input length {len(element["input_ids"])}')
+                print(f'INPUT {tokenizer.decode(element["input_ids"])}')
+                print(f'Input length {len(element["input_ids"])}')
                 inpt_tensor_length = len(element["input_ids"])
                 decoder_input_ids = torch.full(
                     (1, 1), tokenizer.pad_token_id, dtype=torch.long, device=device
@@ -77,7 +76,7 @@ def evaluate(
                 # print(f'OUTPUT without removed input tensor {tokenizer.decode(out[0].tolist())}')
                 # print(f'OUTPUT after removing input tensor {tokenizer.decode(out[0].tolist()[inpt_tensor_length:])}')
                 # words = tokenizer.decode(out[0].tolist()[inpt_tensor_length:], skip_special_tokens=skip_special_tokens) #started decoding after the input sequence
-                words = tokenizer_test.decode(out[0].tolist()[inpt_tensor_length:], skip_special_tokens=skip_special_tokens)
+                words = tokenizer.decode(out[0].tolist()[inpt_tensor_length:], skip_special_tokens=skip_special_tokens)
                 # words = tokenizer.decode(out[0].tolist(), skip_special_tokens=True,skip_special_tokens=skip_special_tokens).strip()
                 print("---------------")
                 print(f"inputs = {tokenizer.decode(element["input_ids"])}")
