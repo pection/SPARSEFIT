@@ -395,7 +395,8 @@ def main():
             load_train = False
         else:
             dataset = datasets.load_dataset(data_args.task_name, version_arg)
-
+            print(f"LOAD DATASET SUCCESS")
+            print(data_args.task_name, version_arg)
             if data_args.n_shots > 0: # Shots = number of training examples **per label** 
                 if data_args.task_name == 'esnli': # Construct a *balanced* random sample of the size `data_args.n_shots*len(labels)` (for train) or `data_args.fewshot_eval_size` (for eval)
                     for split in ["train", "validation", "test"]:
