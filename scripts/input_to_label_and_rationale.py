@@ -578,18 +578,22 @@ def main():
             training_args.evaluation_strategy = EvaluationStrategy.STEPS
         
         
-        # # SPARSEFIT CHANGES
-        # Make trainable only key terms in self-attention layers.
-        for param in model.parameters():
-            param.requires_grad = False
-        # Deactivate language model head
-        # for name, param in model.named_parameters():
-        #     # if name.startswith("decoder"):
-        #     if "SelfAttention.q"in name:
-        #         param.requires_grad = True
-        #     else:
-        #         param.requires_grad = False
+        for name, param in model.named_parameters():
+            # if name.startswith("decoder"):
+            # if 'self_attn.q_proj' in name:
+            if 'SelfAttention.q' in name:
+                param.requires_grad = True
+            else:
+                param.requires_grad = False
         model.lm_head.weight.requires_grad = True
+        # Double check what's still trainable
+        print(f"model_parameter")
+        for name , param in model.named_parameters():
+            print(name)
+        trainable = [name for name, param in model.named_parameters() if param.requires_grad]
+        print("Trainable parameters:")
+        for name in trainable:
+            print(name)
 
         # for name, param in model.named_parameters():
         #     if name.startswith("encoder"):
