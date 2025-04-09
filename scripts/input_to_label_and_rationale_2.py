@@ -374,6 +374,7 @@ def main():
         if data_args.task_name == "cos_e":
             # assert data_args.version_name in {"v1.11", "v1.0"}
             version_arg = data_args.version_name
+            print(f"version_arg = {version_arg}")
 
         load_train = True
         if (not training_args.do_train
