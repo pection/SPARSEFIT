@@ -586,7 +586,7 @@ def main():
                 param.requires_grad = True
             else:
                 param.requires_grad = False
-        model.lm_head.weight.requires_grad = True
+        model.lm_head.weight.requires_grad = False
         trainable = [name for name, param in model.named_parameters() if param.requires_grad]
         print("Trainable parameters:")
         for name in trainable:
