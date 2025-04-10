@@ -134,7 +134,7 @@ class DebugTrainer(Trainer):
             predicted_ids = torch.argmax(logits, dim=-1)
             decoded_preds = self.tokenizer.batch_decode(predicted_ids, skip_special_tokens=True)
 
-            print("\n🔍 High Loss Example")
+            print(f"\nHigh Loss Example {loss}")
             with open("high_loss_samples.jsonl", "a") as f:
                 for i in range(min(3, len(decoded_inputs))):
                     f.write(json.dumps({
