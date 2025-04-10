@@ -141,7 +141,7 @@ def evaluate(
             else: 
                 line_split = line.split(explanation_sep)
                 print(explanation_sep)
-                print(line_split = line.split(explanation_sep),len(line_split))
+                print(line.split(explanation_sep),len(line_split))
                 if len(line_split) > 1:
                     pred_l = line_split[0].strip()
                     pred_e = line_split[1].strip()
