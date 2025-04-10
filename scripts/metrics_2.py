@@ -56,6 +56,7 @@ def evaluate(
                         max_length=300,
                         pad_token_id=tokenizer.pad_token_id,
                         eos_token_id=tokenizer.eos_token_id,
+                        decoder_start_token_id=tokenizer.pad_token_id
                     )
                     # out = model.generate(
                     #     input_ids=inpt_tensor,
