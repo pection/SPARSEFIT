@@ -81,7 +81,7 @@ from accelerate import FullyShardedDataParallelPlugin
 from torch.distributed.fsdp.fully_sharded_data_parallel import FullOptimStateDictConfig, FullStateDictConfig
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
-
+import json
 
 def set_global_logging_level(level=logging.ERROR, prefices=[""]):
     """
@@ -136,17 +136,19 @@ class DebugTrainer(Trainer):
             decoded_preds = self.tokenizer.batch_decode(predicted_ids, skip_special_tokens=True)
 
             print("\n🔍 High Loss Example")
-            for i in range(min(3, len(decoded_inputs))):
-                print(f"Input {i+1}: {decoded_inputs[i]}")
-                print(f"Label {i+1}: {decoded_labels[i]}")
-                print(f"Pred {i+1}:  {decoded_preds[i]}")
-                print("-" * 30)
-                logger.info(f"Pred {i+1}:  {decoded_preds[i]}")
-                logger.info(f"Label {i+1}: {decoded_labels[i]}")
-                logger.info(f"Pred {i+1}:  {decoded_preds[i]}")
-                logger("-" * 30)
+            with open("high_loss_samples.jsonl", "a") as f:
+                for i in range(min(3, len(decoded_inputs))):
+                    f.write(json.dumps({
+                        "loss": float(loss.item()),
+                        "input": decoded_inputs[i],
+                        "label": decoded_labels[i],
+                        "prediction": decoded_preds[i]
+                    }) + "\n")
+                    print(f"Input {i+1}: {decoded_inputs[i]}")
+                    print(f"Label {i+1}: {decoded_labels[i]}")
+                    print(f"Pred {i+1}:  {decoded_preds[i]}")
+                    print("-" * 30)
 
-            print(f"⚠️ Loss: {loss.item():.4f}")
 
         return (loss, outputs) if return_outputs else loss
 
@@ -655,9 +657,9 @@ def main():
         # # SPARSEFIT CHANGES
         # Make trainable only key terms in self-attention layers.
         for param in model.parameters():
-            param.requires_grad = False
+            param.requires_grad = True
         # Deactivate language model head
-        model.lm_head.weight.requires_grad = True
+        # model.lm_head.weight.requires_grad = True
 
 
         # for name, param in model.named_parameters():
