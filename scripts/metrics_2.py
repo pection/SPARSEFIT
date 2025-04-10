@@ -24,7 +24,6 @@ def evaluate(
     generations_file=None,
     io_format=None
 ):
-    tokenizer_test = T5Tokenizer.from_pretrained("t5-base")
 
     fname = os.path.join(save_path, "%s_generations.txt" % split)
     if os.path.isfile(fname):
@@ -76,10 +75,9 @@ def evaluate(
                 print(f'OUTPUT without removed input tensor {tokenizer.decode(out[0].tolist())}')
                 print(f'OUTPUT after removing input tensor {tokenizer.decode(out[0].tolist()[inpt_tensor_length:])}')
                 # words = tokenizer.decode(out[0].tolist()[inpt_tensor_length:], skip_special_tokens=skip_special_tokens) #started decoding after the input sequence
-                words = tokenizer.decode(out[0].tolist()[inpt_tensor_length:], skip_special_tokens=skip_special_tokens)
-                words_2 = tokenizer_test.decode(out[0].tolist()[inpt_tensor_length:], skip_special_tokens=skip_special_tokens)
+                # words = tokenizer.decode(out[0].tolist()[inpt_tensor_length:], skip_special_tokens=skip_special_tokens)
 
-                # words = tokenizer.decode(out[0].tolist(), skip_special_tokens=True,skip_special_tokens=skip_special_tokens).strip()
+                words = tokenizer.decode(out[0].tolist(), skip_special_tokens=True,skip_special_tokens=skip_special_tokens).strip()
                 print("---------------")
 
                 print(f"inputs = {tokenizer.decode(element["input_ids"])}")
