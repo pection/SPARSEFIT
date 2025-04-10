@@ -74,8 +74,9 @@ def evaluate(
                 skip_special_tokens = False if "infilling" in io_format else True
                 # words = tokenizer.decode(out[0].tolist()[inpt_tensor_length:], skip_special_tokens=skip_special_tokens) #started decoding after the input sequence
                 # words = tokenizer.decode(out[0].tolist()[inpt_tensor_length:], skip_special_tokens=skip_special_tokens)
+                words = tokenizer.decode(out[0].tolist()[inpt_tensor_length:], skip_special_tokens=skip_special_tokens) #started decoding after the input sequence
 
-                words = tokenizer.decode(out[0].tolist(), skip_special_tokens=skip_special_tokens).strip()
+                # words = tokenizer.decode(out[0].tolist(), skip_special_tokens=skip_special_tokens).strip()
                 print("---------------")
 
                 print(f"inputs = {tokenizer.decode(element["input_ids"])}")
