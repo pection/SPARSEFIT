@@ -119,6 +119,7 @@ class DebugTrainer(Trainer):
     def __init__(self, *args, tokenizer=None,json_dir="./", **kwargs):
         super().__init__(*args, **kwargs)
         self.tokenizer = tokenizer  # Store tokenizer
+        self.json_dir = json_dir   # Store json_dir
 
     def compute_loss(self, model, inputs, return_outputs=False):
         outputs = model(**inputs)
@@ -135,7 +136,7 @@ class DebugTrainer(Trainer):
             decoded_preds = self.tokenizer.batch_decode(predicted_ids, skip_special_tokens=True)
 
             print(f"\nHigh Loss Example {loss}")
-            json_file_name =os.path.join(json_dir,"high_loss_samples.jsonl")
+            json_file_name =os.path.join(self.json_dir,"high_loss_samples.jsonl")
             with open(json_file_name, "a") as f:
                 for i in range(min(3, len(decoded_inputs))):
                     f.write(json.dumps({
