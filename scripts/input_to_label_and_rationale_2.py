@@ -621,10 +621,10 @@ def main():
         # # SPARSEFIT CHANGES
         # Make trainable only key terms in self-attention layers.
         for param in model.parameters():
-            param.requires_grad = False
+            param.requires_grad = True
 
         for param in model.lm_head.parameters():
-            param.requires_grad = True
+            param.requires_grad = False
 
 
 
