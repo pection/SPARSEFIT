@@ -125,7 +125,7 @@ class DebugTrainer(Trainer):
         loss = outputs.loss
         logits = outputs.logits
 
-        if loss.item() > 4.0:
+        if loss.item() > 1.0:
             input_ids = inputs.get("input_ids")
             labels = inputs.get("labels")
 
