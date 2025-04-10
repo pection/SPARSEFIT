@@ -582,7 +582,10 @@ def main():
             # if name.startswith("decoder"):
             # if 'self_attn.q_proj' in name:
 
-            if 'layer_norm.weight' in name or "SelfAttention.q" in name:
+            # if 'layer_norm.weight' in name or "SelfAttention.q" in name:
+            #     param.requires_grad = True
+
+            if 'layer_norm.weight' in name or "SelfAttention.k" in name:
                 param.requires_grad = True
             else:
                 param.requires_grad = False
