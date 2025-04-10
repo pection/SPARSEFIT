@@ -73,8 +73,8 @@ def evaluate(
 
                 print(f"Raw Model Output2: {out}")
                 skip_special_tokens = False if "infilling" in io_format else True
-                # print(f'OUTPUT without removed input tensor {tokenizer.decode(out[0].tolist())}')
-                # print(f'OUTPUT after removing input tensor {tokenizer.decode(out[0].tolist()[inpt_tensor_length:])}')
+                print(f'OUTPUT without removed input tensor {tokenizer.decode(out[0].tolist())}')
+                print(f'OUTPUT after removing input tensor {tokenizer.decode(out[0].tolist()[inpt_tensor_length:])}')
                 # words = tokenizer.decode(out[0].tolist()[inpt_tensor_length:], skip_special_tokens=skip_special_tokens) #started decoding after the input sequence
                 words = tokenizer.decode(out[0].tolist()[inpt_tensor_length:], skip_special_tokens=skip_special_tokens)
                 words_2 = tokenizer_test.decode(out[0].tolist()[inpt_tensor_length:], skip_special_tokens=skip_special_tokens)
