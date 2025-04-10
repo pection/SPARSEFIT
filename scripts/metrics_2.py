@@ -140,6 +140,8 @@ def evaluate(
                 pred_e = None
             else: 
                 line_split = line.split(explanation_sep)
+                print(explanation_sep)
+                print(line_split = line.split(explanation_sep),len(line_split))
                 if len(line_split) > 1:
                     pred_l = line_split[0].strip()
                     pred_e = line_split[1].strip()
@@ -151,6 +153,7 @@ def evaluate(
                     broken_count += 1
                     broken_generation = True
                     g.write(f"Predicted: {pred_l}\n")
+
 
             if task in ["cos_e", "ecqa"]:
                 gold_l = gold["answer"]
