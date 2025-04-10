@@ -739,25 +739,25 @@ def main():
             )
 
         else:
-            # trainer = Trainer(
-            #     model=model,
-            #     args=training_args,
-            #     train_dataset=data_splits['train'],
-            #     eval_dataset=data_splits['validation'],
-            #     callbacks=callbacks,
-            #     data_collator=SequenceCollator(
-            #         model=model_class, pad_token=tokenizer.pad_token_id
-            #     ),
-            trainer = DebugTrainer(
+            trainer = Trainer(
                 model=model,
                 args=training_args,
                 train_dataset=data_splits['train'],
                 eval_dataset=data_splits['validation'],
-                tokenizer=tokenizer,  # <--- THIS IS IMPORTANT!
                 callbacks=callbacks,
                 data_collator=SequenceCollator(
                     model=model_class, pad_token=tokenizer.pad_token_id
                 ),
+            # trainer = DebugTrainer(
+            #     model=model,
+            #     args=training_args,
+            #     train_dataset=data_splits['train'],
+            #     eval_dataset=data_splits['validation'],
+            #     tokenizer=tokenizer,  # <--- THIS IS IMPORTANT!
+            #     callbacks=callbacks,
+            #     data_collator=SequenceCollator(
+            #         model=model_class, pad_token=tokenizer.pad_token_id
+            #     ),
             )
         
         
