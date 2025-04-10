@@ -625,7 +625,10 @@ def main():
 
         for param in model.lm_head.parameters():
             param.requires_grad = False
-
+        trainable = [name for name, param in model.named_parameters() if param.requires_grad]
+        print("Trainable parameters:")
+        for name in trainable:
+            print(name)
 
 
         # for name, param in model.named_parameters():
