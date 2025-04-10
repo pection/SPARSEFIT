@@ -82,7 +82,6 @@ from torch.distributed.fsdp.fully_sharded_data_parallel import FullOptimStateDic
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
 import json
-global json_dir
 
 def set_global_logging_level(level=logging.ERROR, prefices=[""]):
     """
@@ -117,7 +116,7 @@ def set_other_seeds(seed):
 # https://github.com/huggingface/transformers/blob/master/src/transformers/data/data_collator.py
 # modified to perform batch-level padding.
 class DebugTrainer(Trainer):
-    def __init__(self, *args, tokenizer=None, **kwargs):
+    def __init__(self, *args, tokenizer=None,json_dir="./", **kwargs):
         super().__init__(*args, **kwargs)
         self.tokenizer = tokenizer  # Store tokenizer
 
@@ -300,7 +299,6 @@ def main():
         #     raise ValueError(
         #         f"Output directory ({training_args.output_dir}) already exists and is not empty. Use --overwrite_output_dir to overcome."
         #     )
-        json_dir = training_args.output_dir
 
         handlers = [
             logging.FileHandler(os.path.join(training_args.output_dir, "logger.log")),
@@ -719,6 +717,7 @@ def main():
                 train_dataset=data_splits['train'],
                 eval_dataset=data_splits['validation'],
                 tokenizer=tokenizer,  # <--- THIS IS IMPORTANT!
+                json_dir = training_args.output_dir,
                 callbacks=callbacks,
                 data_collator=SequenceCollator(
                     model=model_class, pad_token=tokenizer.pad_token_id
