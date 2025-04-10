@@ -145,10 +145,10 @@ class DebugTrainer(Trainer):
                         "label": decoded_labels[i],
                         "prediction": decoded_preds[i]
                     }) + "\n")
-                    print(f"Input {i+1}: {decoded_inputs[i]}")
-                    print(f"Label {i+1}: {decoded_labels[i]}")
-                    print(f"Pred {i+1}:  {decoded_preds[i]}")
-                    print("-" * 30)
+                    # print(f"Input {i+1}: {decoded_inputs[i]}")
+                    # print(f"Label {i+1}: {decoded_labels[i]}")
+                    # print(f"Pred {i+1}:  {decoded_preds[i]}")
+                    # print("-" * 30)
 
 
         return (loss, outputs) if return_outputs else loss

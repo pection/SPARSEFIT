@@ -70,22 +70,22 @@ def evaluate(
                     #     decoder_start_token_id=tokenizer.pad_token_id
                     # )
 
-                print(f"Raw Model Output2: {out}")
+                # print(f"Raw Model Output2: {out}")
                 skip_special_tokens = False if "infilling" in io_format else True
                 # words = tokenizer.decode(out[0].tolist()[inpt_tensor_length:], skip_special_tokens=skip_special_tokens) #started decoding after the input sequence
                 # words = tokenizer.decode(out[0].tolist()[inpt_tensor_length:], skip_special_tokens=skip_special_tokens)
                 words = tokenizer.decode(out[0].tolist(), skip_special_tokens=skip_special_tokens) #started decoding after the input sequence
 
                 # words = tokenizer.decode(out[0].tolist(), skip_special_tokens=skip_special_tokens).strip()
-                print("---------------")
+                # print("---------------")
 
-                print(f"inputs = {tokenizer.decode(element["input_ids"])}")
-                print(f'OUTPUT without removed input tensor {tokenizer.decode(out[0].tolist())}')
-                print(f'OUTPUT after removing input tensor {tokenizer.decode(out[0].tolist()[inpt_tensor_length:])}')
+                # print(f"inputs = {tokenizer.decode(element["input_ids"])}")
+                # print(f'OUTPUT without removed input tensor {tokenizer.decode(out[0].tolist())}')
+                # print(f'OUTPUT after removing input tensor {tokenizer.decode(out[0].tolist()[inpt_tensor_length:])}')
 
                 # print(f"words = {words}")
 
-                print("---------------")
+                # print("---------------")
 
                 if "infilling" in io_format:
                     words = words.replace("<extra_id_1>", f" {explanation_sep}")
@@ -140,14 +140,14 @@ def evaluate(
                 pred_e = None
             else: 
                 line_split = line.split(explanation_sep)
-                print(explanation_sep)
-                print(line.split(explanation_sep),len(line_split))
+                # print(explanation_sep)
+                # print(line.split(explanation_sep),len(line_split))
                 if len(line_split) > 1:
                     pred_l = line_split[0].strip()
                     pred_e = line_split[1].strip()
                     g.write(f"Predicted: {pred_l} | {pred_e}\n")
                 else: 
-                    print(f"This line couldn't be processed (most likely due to format issue): {line}")
+                    # print(f"This line couldn't be processed (most likely due to format issue): {line}")
                     pred_l = line.strip()
                     pred_e = "UNK"
                     broken_count += 1
