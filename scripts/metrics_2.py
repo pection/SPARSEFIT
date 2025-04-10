@@ -24,6 +24,7 @@ def evaluate(
     generations_file=None,
     io_format=None
 ):
+    tokenizer = T5Tokenizer.from_pretrained("t5-base")
 
     fname = os.path.join(save_path, "%s_generations.txt" % split)
     if os.path.isfile(fname):
