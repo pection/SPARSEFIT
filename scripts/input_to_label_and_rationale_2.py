@@ -124,7 +124,6 @@ class DebugTrainer(Trainer):
         outputs = model(**inputs)
         loss = outputs.loss
         logits = outputs.logits
-
         if loss.item() > 1.0:
             input_ids = inputs.get("input_ids")
             labels = inputs.get("labels")
@@ -189,44 +188,6 @@ class SequenceCollator:
                 batch[key] = torch.tensor(tmp_list, dtype=torch.long)
         return batch
 
-
-from transformers import Trainer
-import torch
-
-class DebugTrainer(Trainer):
-    def compute_loss(self, model, inputs, return_outputs=False):
-        # Forward pass
-        outputs = model(**inputs)
-        loss = outputs.loss
-        logits = outputs.logits if hasattr(outputs, 'logits') else None
-
-        # Debug condition: Only show samples when loss is too high
-        if loss.item() > 4.0:
-            input_ids = inputs.get('input_ids')
-            labels = inputs.get('labels')
-            if input_ids is not None:
-                decoded_inputs = self.tokenizer.batch_decode(input_ids, skip_special_tokens=True)
-                print("\n🔍 High Loss Input Examples:")
-                for line in decoded_inputs[:3]:
-                    print("Input:", line)
-
-            if labels is not None:
-                decoded_labels = self.tokenizer.batch_decode(labels, skip_special_tokens=True)
-                print("\nExpected Output (Labels):")
-                for line in decoded_labels[:3]:
-                    print("Label:", line)
-
-            if logits is not None:
-                predicted_ids = torch.argmax(logits, dim=-1)
-                decoded_preds = self.tokenizer.batch_decode(predicted_ids, skip_special_tokens=True)
-                print("\nModel Prediction:")
-                for line in decoded_preds[:3]:
-                    print("Pred:", line)
-
-            print(f"⚠️ Loss: {loss.item():.4f}")
-            print("-" * 50)
-
-        return (loss, outputs) if return_outputs else loss
 
 class CausalLMCollator:
     def __init__(self, model, pad_token):
@@ -739,25 +700,25 @@ def main():
             )
 
         else:
-            trainer = Trainer(
-                model=model,
-                args=training_args,
-                train_dataset=data_splits['train'],
-                eval_dataset=data_splits['validation'],
-                callbacks=callbacks,
-                data_collator=SequenceCollator(
-                    model=model_class, pad_token=tokenizer.pad_token_id
-                ),
-            # trainer = DebugTrainer(
+            # trainer = Trainer(
             #     model=model,
             #     args=training_args,
             #     train_dataset=data_splits['train'],
             #     eval_dataset=data_splits['validation'],
-            #     tokenizer=tokenizer,  # <--- THIS IS IMPORTANT!
             #     callbacks=callbacks,
             #     data_collator=SequenceCollator(
             #         model=model_class, pad_token=tokenizer.pad_token_id
             #     ),
+            trainer = DebugTrainer(
+                model=model,
+                args=training_args,
+                train_dataset=data_splits['train'],
+                eval_dataset=data_splits['validation'],
+                tokenizer=tokenizer,  # <--- THIS IS IMPORTANT!
+                callbacks=callbacks,
+                data_collator=SequenceCollator(
+                    model=model_class, pad_token=tokenizer.pad_token_id
+                ),
             )
         
         
