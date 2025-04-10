@@ -82,6 +82,7 @@ from torch.distributed.fsdp.fully_sharded_data_parallel import FullOptimStateDic
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
 import json
+global json_dir
 
 def set_global_logging_level(level=logging.ERROR, prefices=[""]):
     """
@@ -135,7 +136,8 @@ class DebugTrainer(Trainer):
             decoded_preds = self.tokenizer.batch_decode(predicted_ids, skip_special_tokens=True)
 
             print(f"\nHigh Loss Example {loss}")
-            with open("high_loss_samples.jsonl", "a") as f:
+            json_file_name =os.path.join(json_dir,"high_loss_samples.jsonl")
+            with open(json_file_name, "a") as f:
                 for i in range(min(3, len(decoded_inputs))):
                     f.write(json.dumps({
                         "loss": float(loss.item()),
@@ -298,6 +300,8 @@ def main():
         #     raise ValueError(
         #         f"Output directory ({training_args.output_dir}) already exists and is not empty. Use --overwrite_output_dir to overcome."
         #     )
+        json_dir = training_args.output_dir
+
         handlers = [
             logging.FileHandler(os.path.join(training_args.output_dir, "logger.log")),
             logging.StreamHandler(),
