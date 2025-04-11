@@ -620,11 +620,19 @@ def main():
         
         # # SPARSEFIT CHANGES
         # Make trainable only key terms in self-attention layers.
-        for param in model.parameters():
-            param.requires_grad = True
+        # *** LMHEAD FREEZE ***
+        # for param in model.parameters():
+        #     param.requires_grad = True
 
-        for param in model.lm_head.parameters():
-            param.requires_grad = False
+        # for param in model.lm_head.parameters():
+        #     param.requires_grad = False
+
+
+        for name, param in model.named_parameters():
+            if 'layer_norm' in name:
+                param.requires_grad = False
+            else:
+                param.requires_grad = True
         trainable = [name for name, param in model.named_parameters() if param.requires_grad]
         print("Trainable parameters:")
         for name in trainable:
