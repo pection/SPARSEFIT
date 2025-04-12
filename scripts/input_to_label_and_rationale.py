@@ -585,7 +585,7 @@ def main():
             # if 'layer_norm.weight' in name or "SelfAttention.q" in name:
             #     param.requires_grad = True
 
-            if 'layer_norm.weight' in name or "SelfAttention.k" in name:
+            if 'layer_norm.weight' in name or "SelfAttention.v" in name:
                 param.requires_grad = True
             else:
                 param.requires_grad = False
