@@ -58,11 +58,17 @@ from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 model = AutoModelForSeq2SeqLM.from_pretrained("google-t5/t5-base")
 
 print(model)
+# Freeze encoder and shared embedding
 for name, param in model.named_parameters():
-    if 'layernorm' in name:
+
+    if 'layer_norm' in name:
         param.requires_grad = True
     else:
         param.requires_grad = False
+# for param in model.parameters():
+#     param.requires_grad = False
+# Deactivate language model head
+
 # model.lm_head.weight.requires_grad = True
 # Double check what's still trainable
 print(f"model_parameter")
@@ -72,4 +78,14 @@ trainable = [name for name, param in model.named_parameters() if param.requires_
 print("Trainable parameters:")
 for name in trainable:
     print(name)
+
+# Count total and trainable parameters
+total_params = sum(p.numel() for p in model.parameters())
+trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+
+trainable_percent = 100 * trainable_params / total_params
+print(f"Trainable Parameters: {trainable_params:,}")
+print(f"Total Parameters: {total_params:,}")
+print(f"Trainable %: {trainable_percent:.2f}%")
+
 

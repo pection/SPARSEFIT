@@ -259,9 +259,7 @@ def run_exp(args):
         # Iterate through hparams, excluding dictionary elements
 
         for format_n_shots_params in itertools.product(format_vals, n_shot_vals):
-            print("WELCOME")
             format, n_shots = format_n_shots_params
-            print("WELCOME2")
             print(hparams)
             # if 't5' in model: #only perform unified format check for t5 models
             #     print(f"t5 in model")
@@ -273,17 +271,13 @@ def run_exp(args):
             print(run_name_parts)
             run_name = '-'.join([str(v) for v in hparams if not isinstance(v, dict)]).replace('/', '-').replace('.', '').replace(' ','')
 
-            print("WELCOME3")
 
             run_name += '-'.join([format, str(n_shots)])
-            print("WELCOME4")
 
             if not os.path.isdir(os.path.join(args.exp_root, run_name)):
                 os.mkdir(os.path.join(args.exp_root, run_name))
-            print("WELCOME5")
 
             output_dir = os.path.join(args.exp_root, run_name)
-            print("WELCOME6")
 
             # You might need to adjust the cmd_prefix for the type of server you're using, e.g., if you use Slurm
             # We run the commands on google cloud with N gpus allocated just for this project 
