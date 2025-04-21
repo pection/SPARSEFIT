@@ -585,11 +585,12 @@ def main():
             # if 'layer_norm.weight' in name or "SelfAttention.q" in name:
             #     param.requires_grad = True
 
-            if "layer_norm" in name:
+            if "SelfAttention.k" in name:
                 param.requires_grad = True
             else:
                 param.requires_grad = False
-        model.lm_head.weight.requires_grad = False
+
+        model.lm_head.weight.requires_grad = True
         trainable = [name for name, param in model.named_parameters() if param.requires_grad]
         print("Trainable parameters:")
         for name in trainable:
