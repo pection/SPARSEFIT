@@ -55,8 +55,9 @@ from accelerate import FullyShardedDataParallelPlugin
 from torch.distributed.fsdp.fully_sharded_data_parallel import FullOptimStateDictConfig, FullStateDictConfig
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
-model = AutoModelForSeq2SeqLM.from_pretrained("google-t5/t5-base")
-
+# model = AutoModelForSeq2SeqLM.from_pretrained("google-t5/t5-base")
+tokenizer = AutoTokenizer.from_pretrained("allenai/unifiedqa-t5-base")
+model = AutoModelForSeq2SeqLM.from_pretrained("allenai/unifiedqa-t5-base")
 print(model)
 # Freeze encoder and shared embedding
 for name, param in model.named_parameters():
